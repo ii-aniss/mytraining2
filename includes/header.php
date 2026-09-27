@@ -2,7 +2,20 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-$current = basename($_SERVER['PHP_SELF']);
+
+/*
+ * Vercel runs the PHP entrypoints from /api/*.php, while Apache serves the
+ * same files directly from /mytraining/*.php. Derive the public app path
+ * from the script location so links and assets work in both environments.
+ */
+$scriptDirectory = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
+$appBasePath = preg_replace('#/api$#', '', $scriptDirectory) ?: '';
+if ($appBasePath === '/') {
+    $appBasePath = '';
+}
+
+$current = basename($_SERVER['PHP_SELF'] ?? 'index.php');
+$appBaseHref = rtrim($appBasePath, '/') . '/';
 $isAdmin = isset($_SESSION['admin']);
 ?>
 <!DOCTYPE html>
@@ -11,6 +24,7 @@ $isAdmin = isset($_SESSION['admin']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' — MyTraining' : 'MyTraining — Plateforme de formation en ligne' ?></title>
+    <base href="<?= htmlspecialchars($appBaseHref, ENT_QUOTES, 'UTF-8') ?>">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>

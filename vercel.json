@@ -1,0 +1,19 @@
+{
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.9.0"
+    }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/api/index.php" },
+    { "source": "/index.php", "destination": "/api/index.php" },
+    { "source": "/liste.php", "destination": "/api/liste.php" },
+    { "source": "/statistiques.php", "destination": "/api/statistiques.php" },
+    { "source": "/login.php", "destination": "/api/login.php" },
+    { "source": "/register.php", "destination": "/api/register.php" },
+    { "source": "/logout.php", "destination": "/api/logout.php" },
+    { "source": "/modifier.php", "destination": "/api/modifier.php" },
+    { "source": "/supprimer.php", "destination": "/api/supprimer.php" },
+    { "source": "/traitement.php", "destination": "/api/traitement.php" }
+  ]
+}

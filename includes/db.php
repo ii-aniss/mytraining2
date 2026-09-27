@@ -3,13 +3,14 @@
  * Connexion PDO à la base de données formation_db (XAMPP / MySQL)
  */
 
-$DB_HOST = 'localhost';
-$DB_NAME = 'formation_db';
-$DB_USER = 'root';
-$DB_PASS = '';      // Par défaut, XAMPP utilise un mot de passe vide pour root
+$DB_HOST = getenv('DB_HOST') ?: 'localhost';
+$DB_NAME = getenv('DB_NAME') ?: 'formation_db';
+$DB_USER = getenv('DB_USER') ?: 'root';
+$DB_PASS = getenv('DB_PASS') ?: '';      // Par défaut, XAMPP utilise un mot de passe vide pour root
+$DB_PORT = getenv('DB_PORT') ?: '3306';
 $DB_CHAR = 'utf8mb4';
 
-$dsn = "mysql:host=$DB_HOST;dbname=$DB_NAME;charset=$DB_CHAR";
+$dsn = "mysql:host=$DB_HOST;port=$DB_PORT;dbname=$DB_NAME;charset=$DB_CHAR";
 
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
